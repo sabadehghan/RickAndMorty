@@ -2,6 +2,7 @@ import * as React from "react";
 import MainRouter from "./router/MainRouter";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import "./assets/css/Font.css";
+import { GraphQLProvider } from "./graphql";
 
 function App() {
   const theme = React.useMemo(
@@ -26,9 +27,11 @@ function App() {
   );
   return (
     <>
-      <ThemeProvider theme={theme}>
-        <MainRouter />
-      </ThemeProvider>
+      <GraphQLProvider>
+        <ThemeProvider theme={theme}>
+          <MainRouter />
+        </ThemeProvider>
+      </GraphQLProvider>
     </>
   );
 }
