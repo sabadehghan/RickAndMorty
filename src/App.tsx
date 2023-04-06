@@ -2,7 +2,8 @@ import * as React from "react";
 import MainRouter from "./router/MainRouter";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import "./assets/css/Font.css";
-import { GraphQLProvider } from "./graphql";
+import { GraphQLProvider } from "./graphql/apolloClient";
+
 
 function App() {
   const theme = React.useMemo(
