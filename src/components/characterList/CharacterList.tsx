@@ -1,4 +1,6 @@
 import * as React from "react";
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
 import {
   Box,
   Typography,
@@ -6,6 +8,7 @@ import {
   InputAdornment,
   IconButton,
   Grid,
+  CircularProgress,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import FilterListIcon from "@mui/icons-material/FilterList";
@@ -15,6 +18,9 @@ import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/client";
 import { Character } from "../../constants/GlobalTypes";
 import background from "../../assets/images/background.png";
+import Slider from "react-slick";
+
+
 const GET_CHARACTERS = gql`
   query GetCharacters {
     characters {
@@ -30,18 +36,19 @@ const GET_CHARACTERS = gql`
   }
 `;
 
+
 export default function CharacterList() {
   const theme: any = useTheme();
 
   /////State//////
   const [openFilterDialog, setOpenFilterDialog] = React.useState(false);
-
+const [searchTerm, setSearchTerm] = React.useState("")
   /////getData
   const { loading, error, data } = useQuery(GET_CHARACTERS);
   if (error) {
     return <p>Error :</p>;
   } else if (loading) {
-    return <p>Loading ...</p>;
+    return <CircularProgress />;
   }
   const characters: Character[] = data.characters.results;
 
@@ -57,11 +64,11 @@ export default function CharacterList() {
 
   return (
     <>
-      <Box sx={{ backgroundImage: `url(${background})` }}>
-        <Box
-          sx={{ display: "flex", justifyContent: "space-around", mt: "30px" }}
-        >
-          <Typography sx={{ fontSize: "50px" }}>Rick and Morty</Typography>
+      <Box sx={{ backgroundImage: `url(${background})`}}>
+        <Box sx={{ display: "flex", justifyContent: "space-around" }}>
+          <Typography sx={{ fontSize: "50px", color: "#FFFFFF" }}>
+            Rick and Morty
+          </Typography>
           <Box sx={{ mt: "13px" }}>
             <OutlinedInput
               sx={{
@@ -76,6 +83,11 @@ export default function CharacterList() {
                 <InputAdornment position="end">
                   <SearchIcon sx={{ fontSize: "25px" }} />
                 </InputAdornment>
+              }
+              onChange={
+                (event: any) =>{
+                  setSearchTerm(event.target.value)
+                }
               }
             />
             <IconButton
@@ -92,46 +104,66 @@ export default function CharacterList() {
           </Box>
         </Box>
 
-        <Grid container spacing={6}>
-          {characters.map((character) => (
-            <Grid item xs={6} sm={4} md={3} key={character.id}>
-              <Box
-                sx={{
-                  border: "3px solid black",
-                  borderRadius: "20px",
-                  width: "300px",
-                  height: "302px",
-                  mt: "60px",
-                }}
-              >
-                <img
-                  src={character.image}
-                  alt={character.name}
-                  style={{ objectFit: "cover", borderRadius: "20px" }}
-                />
-              </Box>
-              <Box
-                sx={{ display: "flex", justifyContent: "center", mt: "10px" }}
-              >
+        <Grid
+          container
+          columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+          columns={{ xs: 6, sm: 12 }}
+        >
+
+            {characters.filter((character: any) => {
+              if(searchTerm === ""){
+                return character ;
+              }else if(character.name.toLowerCase().includes(searchTerm.toLowerCase())){
+                return character
+              }
+            }).map((character) => (
+
+              <Grid item xs={6} sm={4} md={3} key={character.id}>
+         
+
                 <Box
                   sx={{
-                    backgroundColor: `${theme.palette.secondary.main}`,
-                    width: "200px",
-                    height: "60px",
+                    border: "3px solid #FFFFFF",
                     borderRadius: "20px",
+                    width: "300px",
+                    height: "300px",
+                    mt: "60px",
                     display: "flex",
                     justifyContent: "center",
-                    alignItems: "center",
+                    ml: "90px",
                   }}
                 >
-                  <Typography sx={{ fontSize: "18px", fontWeight: 700 }}>
-                    {character.name}
-                  </Typography>
+                  <img
+                    src={character.image}
+                    alt={character.name}
+                    style={{ objectFit: "cover", borderRadius: "18px" }}
+                  />
                 </Box>
-              </Box>
-            </Grid>
-          ))}
+                <Box
+                  sx={{ display: "flex", justifyContent: "center", mt: "10px" }}
+                >
+                  <Box
+                    sx={{
+                      backgroundColor: `${theme.palette.secondary.main}`,
+                      width: "250px",
+                      height: "60px",
+                      borderRadius: "20px",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Typography sx={{ fontSize: "18px", fontWeight: 700 }}>
+                      {character.name}
+                    </Typography>
+                  </Box>
+                </Box>
+      
+              </Grid>
+
+            ))}
         </Grid>
+
       </Box>
 
       {/* Dialog For Filter */}
