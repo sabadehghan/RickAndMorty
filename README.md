@@ -1,46 +1,53 @@
-# Getting Started with Create React App
+# RICK AND MORTY CHARACTERS
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a web application that fetches and displays data of characters from the Rick and Morty TV show. The application allows users to search and filter characters based on their name, species, and status.
 
-## Available Scripts
+## FEATURES
 
-In the project directory, you can run:
+- Display a list of characters with their name, image, gender, species, and status.
 
-### `npm start`
+- Filter characters based on their gender, species, and status.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- Search characters by their name.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- View the details of a character, including their name, image, gender, species, status.
 
-### `npm test`
+- Display an error message if the data cannot be fetched.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+## TECHNOLOGIES USED
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- TypeScript: Used TypeScript to improve the code quality and maintainability by adding static types to the JavaScript code.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- React JS: Used React JS to build the user interface components and to provide a fast and responsive user experience.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Material UI: Used Material UI to style the components and to provide a consistent and modern look and feel to the application.
 
-### `npm run eject`
+- Redux: Used Redux to manage the application state and to make it easier to share data between components.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- React-Slice: Used React-Slice to create a range slider for filtering the characters based on their status.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- ApolloClient: Used ApolloClient to fetch data from the GraphQL API of the Rick and Morty API.
+    
+- React Router DOM: Used React Router DOM to manage the routing and to provide a smooth and seamless user experience.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## GETTING STARTED
 
-## Learn More
+To get started, follow these steps:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+1. Clone the repository to your local machine.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+2. Navigate to the project directory and install the dependencies using `npm install`.
+
+3. Start the application using `npm start`.
+
+4. Open your web browser and navigate to `http://localhost:3000`.
+
+## HOW TO USE
+
+- Upon opening the application, a list of characters will be displayed.
+
+- To filter characters based on their gender, species, or status, use the button located at the top right of the page.
+
+- To search for a specific character by name, type their name into the search bar.
