@@ -22,6 +22,7 @@ import { client } from "../../graphql/apolloClient";
 import { actions, selectCharacterList } from "../../redux/slice/characterSlice";
 import { useQuery } from "@apollo/client";
 import CircularProgress from "@mui/material/CircularProgress";
+import NotFound from "../../error/NotFound";
 export default function CharacterList() {
   const { t } = I18next.useTranslation();
 
@@ -60,7 +61,7 @@ export default function CharacterList() {
     getCharacterList();
   }, []);
 
-  const { loading } = useQuery(query);
+  const { loading , error} = useQuery(query);
   if (loading) {
     return (
       <Box
@@ -69,6 +70,14 @@ export default function CharacterList() {
         <CircularProgress />
       </Box>
     );
+  }
+  if(error) {
+
+      return (
+       
+          <NotFound />
+      
+    )
   }
 
   ////Slider/////
