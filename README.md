@@ -25,7 +25,7 @@ This is a web application that fetches and displays data of characters from the 
 
 - Redux: Used Redux to manage the application state and to make it easier to share data between components.
 
-- React-Slice: Used React-Slice to create a range slider for filtering the characters based on their status.
+- React-Slick: Used React-Slice to create a range slider for filtering the characters based on their status.
 
 - ApolloClient: Used ApolloClient to fetch data from the GraphQL API of the Rick and Morty API.
     
