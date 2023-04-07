@@ -1,4 +1,5 @@
 import * as React from "react";
+import * as I18next from "react-i18next";
 import CloseIcon from "@mui/icons-material/Close";
 import {
   Box,
@@ -18,13 +19,12 @@ import { actions } from "../../redux/slice/characterSlice";
 import { useDispatch } from "react-redux";
 
 export default function FilterDialog(props: any) {
+  const { t } = I18next.useTranslation();
+
   const theme: any = useTheme();
   const dispatch: any = useDispatch();
 
   /////States//////
-  const [gender, setGender] = React.useState();
-  const [status, setStatus] = React.useState();
-  const [species, setSpecies] = React.useState();
 
   const [filter, setFilter] = React.useState({
     gender: "",
@@ -69,7 +69,7 @@ export default function FilterDialog(props: any) {
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
             <Box sx={{ width: "100%" }}>
               <Typography sx={{ fontSize: "16px", fontWeight: 700 }}>
-                Gender
+                {t("Gender")}
               </Typography>
               <FormControl
                 sx={{
@@ -91,17 +91,17 @@ export default function FilterDialog(props: any) {
                   onChange={IHandleChange}
                   name="gender"
                 >
-                  <MenuItem value="">None</MenuItem>
-                  <MenuItem value="male">Male</MenuItem>
-                  <MenuItem value="female">Female</MenuItem>
-                  <MenuItem value="unknown">Unknown</MenuItem>
+                  <MenuItem value="">{t("None")}</MenuItem>
+                  <MenuItem value="male">{t("Male")}</MenuItem>
+                  <MenuItem value="female">{t("Female")}</MenuItem>
+                  <MenuItem value="unknown">{t("Unknown")}</MenuItem>
                 </Select>
               </FormControl>
             </Box>
 
             <Box sx={{ width: "100%" }}>
               <Typography sx={{ fontSize: "16px", fontWeight: 700 }}>
-                Status
+                {t("Status")}
               </Typography>
 
               <FormControl
@@ -124,16 +124,16 @@ export default function FilterDialog(props: any) {
                   onChange={IHandleChange}
                   name="status"
                 >
-                  <MenuItem value="">None</MenuItem>
-                  <MenuItem value="alive">Alive</MenuItem>
-                  <MenuItem value="dead">Dead</MenuItem>
-                  <MenuItem value="unknown">Unknown</MenuItem>
+                  <MenuItem value="">{t("None")}</MenuItem>
+                  <MenuItem value="alive">{t("Alive")}</MenuItem>
+                  <MenuItem value="dead">{t("Dead")}</MenuItem>
+                  <MenuItem value="unknown">{t("Unknown")}</MenuItem>
                 </Select>
               </FormControl>
             </Box>
             <Box sx={{ width: "100%" }}>
               <Typography sx={{ fontSize: "16px", fontWeight: 700 }}>
-                Species
+                {t("Species")}
               </Typography>
 
               <FormControl
@@ -156,9 +156,9 @@ export default function FilterDialog(props: any) {
                   onChange={IHandleChange}
                   name="species"
                 >
-                  <MenuItem value="">None</MenuItem>
-                  <MenuItem value="human">Human</MenuItem>
-                  <MenuItem value="alien">Alien</MenuItem>
+                  <MenuItem value="">{t("None")}</MenuItem>
+                  <MenuItem value="human">{t("Human")}</MenuItem>
+                  <MenuItem value="alien">{t("Alien")}</MenuItem>
                 </Select>
               </FormControl>
             </Box>
@@ -178,7 +178,7 @@ export default function FilterDialog(props: any) {
               }}
               onClick={IHandleFilter}
             >
-              Filter
+              {t("Filter")}
             </Button>
           </Box>
         </DialogContent>

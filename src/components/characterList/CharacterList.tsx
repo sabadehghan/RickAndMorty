@@ -1,4 +1,6 @@
 import * as React from "react";
+import * as I18next from "react-i18next";
+
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import {
@@ -20,6 +22,8 @@ import { client } from "../../graphql/apolloClient";
 import { actions, selectCharacterList } from "../../redux/slice/characterSlice";
 
 export default function CharacterList() {
+  const { t } = I18next.useTranslation();
+
   /////State//////
   const [openFilterDialog, setOpenFilterDialog] = React.useState(false);
   const [searchTerm, setSearchTerm] = React.useState("");
@@ -41,6 +45,7 @@ export default function CharacterList() {
   /////getData
   const getCharacterList = async () => {
     const query = GUERY_CHARACTERS();
+
     const response = await client.query({
       query: query,
     });
@@ -110,7 +115,7 @@ export default function CharacterList() {
               },
             }}
           >
-            Rick and Morty
+            {t("RickAndMorty")}
           </Typography>
           <Box sx={{ mt: "13px" }}>
             <OutlinedInput
@@ -124,7 +129,7 @@ export default function CharacterList() {
                 backgroundColor: `${theme.palette.primary.main}`,
                 "& fieldset": { border: "none" },
               }}
-              placeholder="Search"
+              placeholder={"Search"}
               endAdornment={
                 <InputAdornment position="end">
                   <SearchIcon sx={{ fontSize: "25px" }} />
@@ -173,7 +178,7 @@ export default function CharacterList() {
                       borderRadius: "20px",
                       width: "300px",
                       height: "300px",
-                      mt: "60px",
+                      mt: "40px",
                       display: "flex",
                       justifyContent: "center",
                       ml: "95px",
@@ -188,15 +193,18 @@ export default function CharacterList() {
                   <Box
                     sx={{
                       display: "flex",
-                      justifyContent: "center",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      justifyContent: "space-between",
                       mt: "10px",
+                      textAlign: "justify",
                     }}
                   >
                     <Box
                       sx={{
                         backgroundColor: `${theme.palette.secondary.main}`,
                         width: "250px",
-                        height: "60px",
+                        height: "50px",
                         borderRadius: "20px",
                         display: "flex",
                         justifyContent: "center",
@@ -205,6 +213,54 @@ export default function CharacterList() {
                     >
                       <Typography sx={{ fontSize: "18px", fontWeight: 700 }}>
                         {character.name}
+                      </Typography>
+                    </Box>
+                    <Box
+                      sx={{
+                        backgroundColor: `${theme.palette.secondary.main}`,
+                        width: "250px",
+                        height: "50px",
+                        borderRadius: "20px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        mt: "10px",
+                      }}
+                    >
+                      <Typography sx={{ fontSize: "18px", fontWeight: 700 }}>
+                        {t("Gender")} : {character.gender}
+                      </Typography>
+                    </Box>
+                    <Box
+                      sx={{
+                        backgroundColor: `${theme.palette.secondary.main}`,
+                        width: "250px",
+                        height: "50px",
+                        borderRadius: "20px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        mt: "10px",
+                      }}
+                    >
+                      <Typography sx={{ fontSize: "18px", fontWeight: 700 }}>
+                        {t("Status")} : {character.status}
+                      </Typography>
+                    </Box>
+                    <Box
+                      sx={{
+                        backgroundColor: `${theme.palette.secondary.main}`,
+                        width: "250px",
+                        height: "50px",
+                        borderRadius: "20px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        mt: "10px",
+                      }}
+                    >
+                      <Typography sx={{ fontSize: "18px", fontWeight: 700 }}>
+                        {t("Species")} : {character.species}
                       </Typography>
                     </Box>
                   </Box>
