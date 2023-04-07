@@ -6,8 +6,7 @@ import {
   Typography,
   OutlinedInput,
   InputAdornment,
-  Stack,
-  IconButton
+  IconButton,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import FilterListIcon from "@mui/icons-material/FilterList";
@@ -15,33 +14,20 @@ import { useTheme } from "@emotion/react";
 import FilterDialog from "../filterDialog/FilterDialog";
 import background from "../../assets/images/background.png";
 import Slider from "react-slick";
-import { GET_CHARACTERS } from "../../graphql/character";
+import { GUERY_CHARACTERS } from "../../graphql/character";
 import { useDispatch, useSelector } from "react-redux";
 import { client } from "../../graphql/apolloClient";
-import { actions, selectCharacterList } from "../../redux/slice/character";
-
+import { actions, selectCharacterList } from "../../redux/slice/characterSlice";
 
 export default function CharacterList() {
+  /////State//////
+  const [openFilterDialog, setOpenFilterDialog] = React.useState(false);
+  const [searchTerm, setSearchTerm] = React.useState("");
+
   const theme: any = useTheme();
   const dispatch: any = useDispatch();
   const characterList: any = useSelector(selectCharacterList);
 
-  const getCharacterList = async () => {
-    const response = await client.query({
-      query: GET_CHARACTERS,
-    });
-
-    dispatch(actions.setCharacterList(response.data.characters.results));
-  };
-
-  React.useEffect(() => {
-    getCharacterList();
-  }, []);
-
-  /////State//////
-  const [openFilterDialog, setOpenFilterDialog] = React.useState(false);
-  const [searchTerm, setSearchTerm] = React.useState("");
- 
   /////handler//////
 
   const handleOpenFilterDialog = () => {
@@ -52,10 +38,24 @@ export default function CharacterList() {
     setOpenFilterDialog(false);
   };
 
+  /////getData
+  const getCharacterList = async () => {
+    const query = GUERY_CHARACTERS();
+    const response = await client.query({
+      query: query,
+    });
+
+    dispatch(actions.setCharacterList(response.data.characters.results));
+  };
+
+  React.useEffect(() => {
+    getCharacterList();
+  }, []);
+
   ////Slider/////
   const settings = {
     dots: true,
-    infinite: true,
+    infinite: false,
     speed: 500,
     slidesToShow: 3,
     slidesToScroll: 3,
@@ -79,7 +79,7 @@ export default function CharacterList() {
         },
       },
       {
-        breakpoint: 480,
+        breakpoint: 300,
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
@@ -100,19 +100,25 @@ export default function CharacterList() {
         <Box
           sx={{ display: "flex", justifyContent: "space-around", mt: "20px" }}
         >
-          <Typography sx={{ fontSize: "50px", color: "#FFFFFF", display: {
-            xs: "none",
-            md: "block"
-          } }}>
+          <Typography
+            sx={{
+              fontSize: "50px",
+              color: "#FFFFFF",
+              display: {
+                xs: "none",
+                md: "block",
+              },
+            }}
+          >
             Rick and Morty
           </Typography>
           <Box sx={{ mt: "13px" }}>
             <OutlinedInput
               sx={{
-                width:{
+                width: {
                   xs: "350px",
-                  md:"476px",
-                } ,
+                  md: "476px",
+                },
                 height: "58px",
                 borderRadius: "30px",
                 backgroundColor: `${theme.palette.primary.main}`,
@@ -134,6 +140,9 @@ export default function CharacterList() {
                 width: "63px",
                 height: "60px",
                 ml: "10px",
+                "&:hover": {
+                  backgroundColor: `${theme.palette.primary.main}`,
+                },
               }}
               onClick={handleOpenFilterDialog}
             >
@@ -142,13 +151,7 @@ export default function CharacterList() {
           </Box>
         </Box>
 
-        <Stack
-          // container
-          // columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-          // columns={{ xs: 6, sm: 12 }}
-          spacing={2}
-          sx={{ mt: "30px" }}
-        >
+        <Box>
           <Slider {...settings}>
             {characterList
               ?.filter((character: any) => {
@@ -163,7 +166,7 @@ export default function CharacterList() {
                 }
               })
               ?.map((character: any) => (
-                <Box onClick={() => console.log("ok")} key={character.id}>
+                <Box key={character.id}>
                   <Box
                     sx={{
                       border: "3px solid #FFFFFF",
@@ -173,7 +176,7 @@ export default function CharacterList() {
                       mt: "60px",
                       display: "flex",
                       justifyContent: "center",
-                      ml: "90px",
+                      ml: "95px",
                     }}
                   >
                     <img
@@ -208,7 +211,7 @@ export default function CharacterList() {
                 </Box>
               ))}
           </Slider>
-        </Stack>
+        </Box>
       </Box>
 
       {/* Dialog For Filter */}
