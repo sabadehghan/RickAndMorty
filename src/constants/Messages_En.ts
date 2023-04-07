@@ -16,5 +16,6 @@ export default {
   Alien: "Alien",
   Filter: "Filter",
   Male: "Male",
-  Female: "Female"
+  Female: "Female",
+  BackHome: "BackHome"
 };
