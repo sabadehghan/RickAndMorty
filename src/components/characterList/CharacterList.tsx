@@ -20,7 +20,8 @@ import { GUERY_CHARACTERS } from "../../graphql/character";
 import { useDispatch, useSelector } from "react-redux";
 import { client } from "../../graphql/apolloClient";
 import { actions, selectCharacterList } from "../../redux/slice/characterSlice";
-
+import { useQuery } from "@apollo/client";
+import CircularProgress from "@mui/material/CircularProgress";
 export default function CharacterList() {
   const { t } = I18next.useTranslation();
 
@@ -43,9 +44,11 @@ export default function CharacterList() {
   };
 
   /////getData
-  const getCharacterList = async () => {
-    const query = GUERY_CHARACTERS();
+  const query = GUERY_CHARACTERS();
 
+  const getCharacterList = async () => {
+
+  
     const response = await client.query({
       query: query,
     });
@@ -56,6 +59,17 @@ export default function CharacterList() {
   React.useEffect(() => {
     getCharacterList();
   }, []);
+
+  const { loading } = useQuery(query);
+  if (loading) {
+    return (
+      <Box
+        sx={{ display: "flex", justifyContent: "center", mt: "300px" }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   ////Slider/////
   const settings = {
