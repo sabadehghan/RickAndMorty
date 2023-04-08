@@ -48,8 +48,6 @@ export default function CharacterList() {
   const query = GUERY_CHARACTERS();
 
   const getCharacterList = async () => {
-
-  
     const response = await client.query({
       query: query,
     });
@@ -61,23 +59,16 @@ export default function CharacterList() {
     getCharacterList();
   }, []);
 
-  const { loading , error} = useQuery(query);
+  const { loading, error } = useQuery(query);
   if (loading) {
     return (
-      <Box
-        sx={{ display: "flex", justifyContent: "center", mt: "300px" }}
-      >
+      <Box sx={{ display: "flex", justifyContent: "center", mt: "300px" }}>
         <CircularProgress />
       </Box>
     );
   }
-  if(error) {
-
-      return (
-       
-          <NotFound />
-      
-    )
+  if (error) {
+    return <NotFound />;
   }
 
   ////Slider/////
@@ -201,10 +192,10 @@ export default function CharacterList() {
                       borderRadius: "20px",
                       width: "300px",
                       height: "300px",
-                      mt: "40px",
+                      mt: "50px !important",
                       display: "flex",
                       justifyContent: "center",
-                      ml: "95px",
+                      margin: " 0 auto",
                     }}
                   >
                     <img
